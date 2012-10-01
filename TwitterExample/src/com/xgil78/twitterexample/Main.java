@@ -18,7 +18,7 @@ import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -53,16 +53,15 @@ public class Main extends Activity implements ITwitterSearchTask
 	{
 		super.onCreate(savedInstanceState);
 		
+		requestWindowFeature( Window.FEATURE_NO_TITLE );
 		setContentView( R.layout.main_layout );
 		
-		this.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN );		
-		
 		mSpecialChars = new HashMap<String, String>();
-		mSpecialChars.put( "@", "from:@" );
+		mSpecialChars.put( "@", "%40" );
 		mSpecialChars.put( "#", "%23" );
 		
 		mEditText = (EditText) findViewById( R.id.editText1 );
-		mEditText.setText( "Google" );
+		mEditText.setText( "@Android" );
 		
 		mListView = (ListView) findViewById( R.id.listView1 );
 		mButton = (Button) findViewById( R.id.button1 );
@@ -93,6 +92,7 @@ public class Main extends Activity implements ITwitterSearchTask
 		
 		mProgressDialog = new ProgressDialog( this );
 		mProgressDialog.setProgressStyle( ProgressDialog.STYLE_SPINNER );
+		mProgressDialog.setMessage( "Please wait..." );
 	}
 	
 	private void readTweets( String query )
@@ -175,7 +175,7 @@ public class Main extends Activity implements ITwitterSearchTask
 				}
 			}
 			
-			ArrayAdapter<Spannable> adapter = new ArrayAdapter<Spannable>( this, android.R.layout.simple_list_item_1, android.R.id.text1, values );
+			ArrayAdapter<Spannable> adapter = new ArrayAdapter<Spannable>( this, R.layout.list_item_layout, android.R.id.text1, values );
 			mListView.setAdapter(adapter);
 		}
 	}

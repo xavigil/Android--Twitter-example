@@ -75,7 +75,6 @@ public class TwitterSearchTask extends AsyncTask<URL, Void, Void>
 			for( Tweet tweet : mResult )
 			{
 				tweet.tweetDate = mDF.parse( tweet.createdAt );
-//				Log.d("", "tweet = " + tweet.text );
 			}
 		}
 		catch (Exception e){ e.printStackTrace(); }		
